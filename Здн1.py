@@ -14,33 +14,35 @@ import json
 class TaskOne:
    const_list = [1, 2, 5, 10, 50, 100, 500, 1000, 5000]
    def __init__(self):
-      self.sum_dict = {}
-      self.summ = 0
-      self.first = 0
-      self.second = 0
+      self.__summ = 0
+      self.__first = 0
+      self.__second = 0
+
+   @property
+   def first(self):
+      return self.__first
+
+   @property
+   def second(self):
+      return self.__second
+
+   @property
+   def summ(self):
+      return self.__summ
 
    def read(self, prompt=None):
-      self.first = input('Введите номинал купюры: ') if prompt is None else input(prompt)
-      if int(self.first) in TaskOne.const_list:
-         self.second = input('Введите количество купюр данного номинала: ') if prompt is None else input(prompt)
-         self.sum_dict[self.first] = self.second
+      self.__first = int(input('Введите номинал купюры: ')) if prompt is None else input(prompt)
+      if int(self.__first) in TaskOne.const_list:
+         self.__second = int(input('Введите количество купюр данного номинала: ')) if prompt is None else input(prompt)
       else:
          print("Такого номинала нет в списке")
 
    def display(self):
-      print("Сумма: ", make_summa(self.sum_dict, self.summ))
+      print("Сумма: ", (self.__first*self.__second))
 
 
-def make_summa(sum_dict, summ):
-   with open('new_json.json', 'r', encoding='utf-8') as file:
-      json_list = json.load(file)
-   json_list.append(sum_dict)
-   for i in json_list:
-      for k, j in i.items():
-         summ += int(k) * int(j)
-   with open('new_json.json', 'w', encoding='utf-8') as file:
-      json.dump(json_list, file)
-   return summ
+   #def make_summa(self):
+      #return self.__summ(self.__first*self.__second)
 
 
 if __name__ == '__main__':
